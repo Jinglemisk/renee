@@ -1,0 +1,89 @@
+# Renee
+
+An AI-native turn-based game framework.
+
+## What is Renee?
+
+Renee is a framework for building turn-based games designed from the ground up for AI-assisted development. Traditional game engines assume human developers with GUIs and documentation. Renee assumes your co-developer is an AI coding agent.
+
+## Documentation
+
+**[DESIGN.md](DESIGN.md)** is the source of truth. It covers:
+- Architecture and core systems
+- Design principles and philosophy
+- All major subsystems (ECS, Events, Rules, Turn Management, etc.)
+- Multiplayer architecture
+- AI-native tooling
+
+## Key Differentiators
+
+**AI-Native means "AI can derive insights it couldn't get elsewhere"**
+
+| Feature | Why It Matters |
+|---------|----------------|
+| Intent Fields | AI validates implementation against stated design goals |
+| Schema Registry | Framework describes itself—AI asks "what fields?" and gets answers |
+| `--json` on Everything | Machine-parseable output for reliable AI interaction |
+| Simulation Engine | AI experiments with balance safely |
+| Snapshot/Rollback | AI tries, evaluates, undoes freely |
+| Python Rules | No custom DSL—AI writes logic in Python it already knows |
+
+## Genre Agnostic
+
+Renee provides primitives. Games define content.
+
+Works for: Chess, card games, tactics RPGs, board games, dungeon crawlers, puzzle games—any turn-based genre.
+
+## Supporting Files
+
+| File | Purpose |
+|------|---------|
+| [ROADMAP.md](ROADMAP.md) | Development roadmap for building the framework |
+| [sysprompt.md](sysprompt.md) | System prompt for AI development partner |
+
+## Archived
+
+Historical design iterations preserved for reference:
+- `ai-engine-ORIGINAL.md` — Original exhaustive design
+- `renee-engine-DRAFT.md` — Intermediate draft
+
+---
+
+## Status
+
+This repo now contains a working implementation of the core Renee subsystems (ECS, schemas, events, actions/rules/turns, spatial helpers, rendering backends, and multiplayer).
+
+## Quickstart
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+```
+
+Optional extras:
+- CLI pretty output: `pip install -e ".[cli]"`
+- Pygame renderer: `pip install -e ".[pygame]"`
+
+### Run the demo
+
+Local (terminal):
+```bash
+renee demo local --renderer terminal
+```
+
+REPL (demo):
+```bash
+renee repl demo
+```
+
+Server + client (terminal):
+```bash
+renee demo server
+renee demo client
+```
+
+Local (pygame):
+```bash
+renee demo local --renderer pygame
+```
