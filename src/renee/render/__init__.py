@@ -21,6 +21,7 @@ from renee.render.commands import (
 from renee.render.renderer import Renderer, InputState
 from renee.render.headless import HeadlessRenderer
 from renee.render.terminal import TerminalRenderer
+from renee.render.pygame_renderer import PygameRenderer
 
 __all__ = [
     # Base classes
@@ -38,4 +39,5 @@ __all__ = [
     # Concrete renderers
     "HeadlessRenderer",
     "TerminalRenderer",
+    "PygameRenderer",
 ]

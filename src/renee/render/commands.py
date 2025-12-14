@@ -7,7 +7,7 @@ They are renderer-agnostic and can be interpreted by different backends
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -18,7 +18,7 @@ class RenderCommand:
     Higher layer values are drawn on top of lower values.
     """
 
-    layer: int = 0  # Draw order
+    layer: int = field(default=0, kw_only=True)  # Draw order
 
 
 @dataclass
