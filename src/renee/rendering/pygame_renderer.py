@@ -53,11 +53,6 @@ class PygameRenderer(Renderer):
         pygame = self._require_pygame()
         screen = self._require_screen()
 
-        # Basic input polling for quit; key state is refreshed in get_input().
-        for ev in pygame.event.get():
-            if ev.type == pygame.QUIT:
-                self._input.quit_requested = True
-
         for raw in commands:
             cmd = normalize_command(raw)
             t = cmd["type"]

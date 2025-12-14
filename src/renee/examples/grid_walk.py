@@ -125,10 +125,6 @@ def run_local(*, renderer: str = "terminal") -> None:
         r.initialize({"width": 800, "height": 600, "title": "Renee Grid Walk", "scale": 20})
         try:
             while True:
-                if r.get_input().quit_requested:
-                    return
-                cmds = render_commands(pipeline, schemas)
-                r.render(cmds)
                 inp = r.get_input()
                 if inp.quit_requested:
                     return
@@ -137,6 +133,9 @@ def run_local(*, renderer: str = "terminal") -> None:
                     pipeline.execute("Move", actor=pipeline.turns.current_player(), params={"dx": dx, "dy": dy})
                 if "q" in inp.keys_pressed or "escape" in inp.keys_pressed:
                     return
+
+                cmds = render_commands(pipeline, schemas)
+                r.render(cmds)
         finally:
             r.shutdown()
 
@@ -183,9 +182,6 @@ def run_client(*, host: str = "127.0.0.1", port: int = 8765, renderer: str = "te
         r.initialize({"width": 800, "height": 600, "title": "Renee Grid Walk (Client)", "scale": 20})
         try:
             while True:
-                if r.get_input().quit_requested:
-                    return
-                r.render(render_commands(pipeline, schemas))
                 inp = r.get_input()
                 if inp.quit_requested:
                     return
@@ -196,6 +192,8 @@ def run_client(*, host: str = "127.0.0.1", port: int = 8765, renderer: str = "te
                     return
                 if client.last_error is not None:
                     raise client.last_error
+
+                r.render(render_commands(pipeline, schemas))
         finally:
             r.shutdown()
 

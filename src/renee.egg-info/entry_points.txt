@@ -1,0 +1,2 @@
+[console_scripts]
+renee = renee.cli.main:main
