@@ -1,0 +1,130 @@
+# Example event schemas for Renee
+# Events represent things that happen in the game
+
+events:
+  DamageEvent:
+    intent: "Emitted when an entity takes damage"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity that took damage"
+      amount:
+        type: int
+        constraints:
+          min: 0
+        description: "Amount of damage dealt"
+      damage_type:
+        type: str
+        default: "physical"
+        description: "Type of damage (physical, fire, ice, etc.)"
+      source_id:
+        type: EntityId
+        default: null
+        description: "Entity that caused the damage (null for environmental)"
+
+  HealEvent:
+    intent: "Emitted when an entity is healed"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity that was healed"
+      amount:
+        type: int
+        constraints:
+          min: 0
+        description: "Amount of HP restored"
+      source_id:
+        type: EntityId
+        default: null
+        description: "Entity that provided healing (null for regeneration)"
+
+  EntitySpawnedEvent:
+    intent: "Emitted when a new entity is created"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "ID of the newly created entity"
+      entity_type:
+        type: str
+        description: "Type/template of entity spawned"
+      position:
+        type: Position
+        default: null
+        description: "Initial position (if applicable)"
+
+  EntityDestroyedEvent:
+    intent: "Emitted when an entity is removed from the world"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "ID of the destroyed entity"
+      reason:
+        type: str
+        default: "unknown"
+        description: "Reason for destruction (death, cleanup, etc.)"
+
+  ItemPickedUpEvent:
+    intent: "Emitted when entity picks up an item"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity that picked up the item"
+      item_id:
+        type: EntityId
+        description: "Item that was picked up"
+
+  ItemDroppedEvent:
+    intent: "Emitted when entity drops an item"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity that dropped the item"
+      item_id:
+        type: EntityId
+        description: "Item that was dropped"
+      position:
+        type: Position
+        description: "Where the item was dropped"
+
+  LevelUpEvent:
+    intent: "Emitted when entity gains a level"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity that leveled up"
+      old_level:
+        type: int
+        constraints:
+          min: 1
+        description: "Previous level"
+      new_level:
+        type: int
+        constraints:
+          min: 1
+        description: "New level"
+    invariants:
+      - "new_level > old_level"
+
+  TurnStartEvent:
+    intent: "Emitted at the start of a player's turn"
+    fields:
+      turn_number:
+        type: int
+        constraints:
+          min: 1
+        description: "Current turn number"
+      player_id:
+        type: EntityId
+        description: "Player whose turn is starting"
+
+  TurnEndEvent:
+    intent: "Emitted at the end of a player's turn"
+    fields:
+      turn_number:
+        type: int
+        constraints:
+          min: 1
+        description: "Turn number that just ended"
+      player_id:
+        type: EntityId
+        description: "Player whose turn is ending"

@@ -1,0 +1,90 @@
+# Example Input Bindings Configuration for Renee
+#
+# This file demonstrates how to configure custom input bindings.
+# Actions are logical game commands that can be triggered by
+# keyboard keys, mouse buttons, or controller inputs.
+
+bindings:
+  # Movement actions
+  move_up:
+    keys: [w, up]
+  move_down:
+    keys: [s, down]
+  move_left:
+    keys: [a, left]
+  move_right:
+    keys: [d, right]
+
+  # Combat actions
+  attack:
+    keys: [space, j]
+    mouse: [1]  # Left mouse button
+    controller: [a, x]
+
+  defend:
+    keys: [shift, k]
+    controller: [b, circle]
+
+  special_ability:
+    keys: [e, l]
+    mouse: [3]  # Right mouse button
+    controller: [y, triangle]
+
+  # Menu/UI actions
+  confirm:
+    keys: [return, space]
+    controller: [a, start]
+
+  cancel:
+    keys: [escape, backspace]
+    controller: [b, select]
+
+  pause:
+    keys: [escape, p]
+    controller: [start]
+
+  # Selection actions
+  select:
+    mouse: [1]
+
+  context_menu:
+    mouse: [3]
+
+  # Camera/view actions
+  zoom_in:
+    keys: [plus, equals]
+
+  zoom_out:
+    keys: [minus]
+
+  rotate_camera_left:
+    keys: [q]
+
+  rotate_camera_right:
+    keys: [e]
+
+  # Quick actions/hotkeys
+  ability_1:
+    keys: ['1']
+
+  ability_2:
+    keys: ['2']
+
+  ability_3:
+    keys: ['3']
+
+  ability_4:
+    keys: ['4']
+
+  # Inventory
+  open_inventory:
+    keys: [i, tab]
+
+  open_map:
+    keys: [m]
+
+  quick_save:
+    keys: [f5]
+
+  quick_load:
+    keys: [f9]

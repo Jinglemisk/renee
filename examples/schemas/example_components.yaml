@@ -1,0 +1,139 @@
+# Example component schemas for Renee
+# This file demonstrates the YAML schema format
+
+components:
+  Health:
+    intent: "Tracks entity hit points with optional regeneration"
+    fields:
+      current:
+        type: int
+        default: 100
+        constraints:
+          min: 0
+        description: "Current hit points"
+      max:
+        type: int
+        default: 100
+        constraints:
+          min: 1
+        description: "Maximum hit points"
+      regen_rate:
+        type: int
+        default: 0
+        constraints:
+          min: 0
+        description: "HP regenerated per turn (0 = no regen)"
+    invariants:
+      - "current <= max"
+      - "current >= 0"
+
+  Position:
+    intent: "Entity location on a 2D grid"
+    fields:
+      x:
+        type: int
+        default: 0
+        description: "X coordinate"
+      y:
+        type: int
+        default: 0
+        description: "Y coordinate"
+
+  Sprite:
+    intent: "Visual representation of an entity"
+    fields:
+      image:
+        type: str
+        default: "default.png"
+        description: "Asset reference to sprite image"
+      scale:
+        type: float
+        default: 1.0
+        constraints:
+          min: 0.1
+          max: 10.0
+        description: "Sprite scale multiplier"
+      rotation:
+        type: float
+        default: 0.0
+        constraints:
+          min: 0.0
+          max: 360.0
+        description: "Rotation in degrees"
+      flip_x:
+        type: bool
+        default: false
+        description: "Flip sprite horizontally"
+      flip_y:
+        type: bool
+        default: false
+        description: "Flip sprite vertically"
+
+  Inventory:
+    intent: "Container for items carried by entity"
+    fields:
+      capacity:
+        type: int
+        default: 20
+        constraints:
+          min: 1
+        description: "Maximum number of items"
+      items:
+        type: list
+        default: []
+        description: "List of item entity IDs"
+    invariants:
+      - "len(items) <= capacity"
+
+  Stats:
+    intent: "Character statistics for RPG-style games"
+    fields:
+      strength:
+        type: int
+        default: 10
+        constraints:
+          min: 1
+          max: 100
+      dexterity:
+        type: int
+        default: 10
+        constraints:
+          min: 1
+          max: 100
+      intelligence:
+        type: int
+        default: 10
+        constraints:
+          min: 1
+          max: 100
+      level:
+        type: int
+        default: 1
+        constraints:
+          min: 1
+        description: "Character level"
+      experience:
+        type: int
+        default: 0
+        constraints:
+          min: 0
+        description: "Experience points earned"
+
+  StatusEffect:
+    intent: "Temporary buff or debuff on entity"
+    fields:
+      effect_type:
+        type: str
+        description: "Type of effect (poison, stun, shield, etc.)"
+      duration:
+        type: int
+        default: 3
+        constraints:
+          min: 1
+        description: "Number of turns remaining"
+      magnitude:
+        type: float
+        default: 1.0
+        description: "Effect strength multiplier"
+    invariants:
+      - "duration >= 1"

@@ -1,0 +1,114 @@
+# Example action schemas for Renee
+# Actions represent player/AI inputs and commands
+
+actions:
+  MoveAction:
+    intent: "Move an entity to a new grid position"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity to move"
+      target_x:
+        type: int
+        description: "Target X coordinate"
+      target_y:
+        type: int
+        description: "Target Y coordinate"
+
+  AttackAction:
+    intent: "Entity attacks another entity"
+    fields:
+      attacker_id:
+        type: EntityId
+        description: "Entity performing the attack"
+      target_id:
+        type: EntityId
+        description: "Entity being attacked"
+      weapon_id:
+        type: EntityId
+        default: null
+        description: "Weapon used (null for unarmed)"
+
+  UseItemAction:
+    intent: "Use an item from inventory"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity using the item"
+      item_id:
+        type: EntityId
+        description: "Item being used"
+      target_id:
+        type: EntityId
+        default: null
+        description: "Target entity (for items that target others)"
+
+  PickUpItemAction:
+    intent: "Pick up an item from the ground"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity picking up the item"
+      item_id:
+        type: EntityId
+        description: "Item to pick up"
+
+  DropItemAction:
+    intent: "Drop an item from inventory"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity dropping the item"
+      item_id:
+        type: EntityId
+        description: "Item to drop"
+
+  InteractAction:
+    intent: "Interact with an object or entity"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity performing the interaction"
+      target_id:
+        type: EntityId
+        description: "Object or entity to interact with"
+      interaction_type:
+        type: str
+        default: "use"
+        description: "Type of interaction (use, talk, examine, etc.)"
+
+  CastSpellAction:
+    intent: "Cast a spell or ability"
+    fields:
+      caster_id:
+        type: EntityId
+        description: "Entity casting the spell"
+      spell_name:
+        type: str
+        description: "Name of the spell to cast"
+      target_id:
+        type: EntityId
+        default: null
+        description: "Target entity (null for self or area spells)"
+      target_x:
+        type: int
+        default: null
+        description: "Target X coordinate (for area spells)"
+      target_y:
+        type: int
+        default: null
+        description: "Target Y coordinate (for area spells)"
+
+  WaitAction:
+    intent: "Entity waits, doing nothing this turn"
+    fields:
+      entity_id:
+        type: EntityId
+        description: "Entity waiting"
+
+  EndTurnAction:
+    intent: "Player ends their turn"
+    fields:
+      player_id:
+        type: EntityId
+        description: "Player ending their turn"
