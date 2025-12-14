@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import pytest
 
 from renee import World, Position, EntityId
+from renee.events import EventBus
 
 
 @dataclass
@@ -202,6 +203,70 @@ class TestWorldQueries:
         assert len(result) == 2
         assert e1 in result
         assert e2 in result
+
+
+class TestWorldTagsAndIntent:
+    def test_tags_roundtrip(self) -> None:
+        world = World()
+        e = world.create_entity()
+        world.add_tag(e, "player")
+        world.add_tag(e, "human")
+        assert world.has_tag(e, "player")
+        assert world.tags(e) == {"player", "human"}
+
+        world.remove_tag(e, "human")
+        assert not world.has_tag(e, "human")
+        assert world.tags(e) == {"player"}
+
+    def test_query_with_tags(self) -> None:
+        world = World()
+        a = world.create_entity()
+        b = world.create_entity()
+        world.add_component(a, Position(x=0, y=0))
+        world.add_component(b, Position(x=1, y=1))
+        world.add_tag(a, "player")
+
+        result = list(world.query(Position, tags={"player"}))
+        assert result == [a]
+
+    def test_intent_roundtrip(self) -> None:
+        world = World()
+        e = world.create_entity()
+        assert world.get_intent(e) is None
+        world.set_intent(e, "This is the hero.")
+        assert world.get_intent(e) == "This is the hero."
+
+
+class TestWorldSnapshots:
+    def test_snapshot_and_restore(self) -> None:
+        world = World()
+        e = world.create_entity()
+        world.add_component(e, Position(x=1, y=2))
+        world.add_tag(e, "player")
+        world.set_intent(e, "Hero")
+
+        snap = world.snapshot()
+
+        world.add_component(e, Position(x=9, y=9))
+        world.remove_tag(e, "player")
+        world.set_intent(e, "Villain")
+
+        world.restore(snap)
+        assert world.get_component(e, Position) == Position(x=1, y=2)
+        assert world.has_tag(e, "player")
+        assert world.get_intent(e) == "Hero"
+
+
+class TestWorldLifecycleEvents:
+    def test_spawn_and_destroy_emits_events(self) -> None:
+        bus = EventBus()
+        world = World(event_bus=bus)
+
+        e = world.spawn([Position(x=0, y=0)], tags=["player"], intent="Hero")
+        world.destroy_entity(e)
+
+        types = [ev.type for ev in bus.history()]
+        assert types == ["entity_spawned", "entity_destroyed"]
 
 
 class TestIntegration:

@@ -49,4 +49,41 @@ Historical design iterations preserved for reference:
 
 ---
 
-*This is a design-stage project. No implementation exists yet.*
+## Status
+
+This repo now contains a working implementation of the core Renee subsystems (ECS, schemas, events, actions/rules/turns, spatial helpers, rendering backends, and multiplayer).
+
+## Quickstart
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+```
+
+Optional extras:
+- CLI pretty output: `pip install -e ".[cli]"`
+- Pygame renderer: `pip install -e ".[pygame]"`
+
+### Run the demo
+
+Local (terminal):
+```bash
+renee demo local --renderer terminal
+```
+
+REPL (demo):
+```bash
+renee repl demo
+```
+
+Server + client (terminal):
+```bash
+renee demo server
+renee demo client
+```
+
+Local (pygame):
+```bash
+renee demo local --renderer pygame
+```

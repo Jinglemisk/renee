@@ -1,6 +1,10 @@
 """Tests for semantic types."""
 
-from renee.types import Position
+import random
+
+import pytest
+
+from renee.types import DiceRoll, Duration, Formula, Position, Probability
 
 
 class TestPosition:
@@ -53,3 +57,50 @@ class TestPosition:
         # Positions should be usable as dict keys / set members
         positions = {Position(0, 0), Position(1, 1), Position(0, 0)}
         assert len(positions) == 2
+
+
+class TestProbability:
+    def test_valid_probability(self) -> None:
+        assert Probability(0.0) == 0.0
+        assert Probability(0.5) == 0.5
+        assert Probability(1.0) == 1.0
+
+    def test_invalid_probability_raises(self) -> None:
+        with pytest.raises(ValueError):
+            Probability(-0.1)
+        with pytest.raises(ValueError):
+            Probability(1.1)
+
+
+class TestDiceRoll:
+    def test_parse(self) -> None:
+        assert DiceRoll.parse("2d6+3") == DiceRoll(count=2, sides=6, modifier=3)
+        assert DiceRoll.parse("1d20") == DiceRoll(count=1, sides=20, modifier=0)
+        assert DiceRoll.parse("4d8-2") == DiceRoll(count=4, sides=8, modifier=-2)
+
+    def test_roll_deterministic(self) -> None:
+        rng = random.Random(123)
+        d = DiceRoll.parse("2d6+1")
+        assert d.roll(rng) == 4 + 1  # deterministic for seed 123
+
+
+class TestDuration:
+    def test_parse(self) -> None:
+        assert Duration.parse("3") == Duration(turns=3)
+        assert Duration.parse("3 turn") == Duration(turns=3)
+        assert Duration.parse("3 turns") == Duration(turns=3)
+
+    def test_negative_raises(self) -> None:
+        with pytest.raises(ValueError):
+            Duration(turns=-1)
+
+
+class TestFormula:
+    def test_evaluate(self) -> None:
+        f = Formula("base + level * 2")
+        assert f.evaluate({"base": 10, "level": 3}) == 16.0
+
+    def test_disallow_unknown_name(self) -> None:
+        f = Formula("missing + 1")
+        with pytest.raises(NameError):
+            f.evaluate({})
