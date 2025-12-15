@@ -348,10 +348,10 @@ class World:
             {
                 "components": {
                     "Position": {"x": 0, "y": 0},
-                    "Health": {"current": 100, "max": 100}
+                    "UnitStats": {"strength": 10, "armor": 5}
                 },
-                "tags": ["enemy", "goblin"],
-                "intent": "A basic goblin enemy"
+                "tags": ["hostile", "ground_unit"],
+                "intent": "A basic opposing unit"
             }
 
         Args:

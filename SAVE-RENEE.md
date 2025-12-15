@@ -13,6 +13,7 @@ These conflicts between renee-claude and renee-codex have been decided:
 - Matches Python's natural sort order
 - Aligns with AI training corpus expectations
 - **Action:** Update `rules/engine.py` to remove `reverse=True` from sort
+- **Status:** ⚠️ NOT YET APPLIED — merged still uses `reverse=True` (line ~217)
 
 ### 2. Action/Context Structure
 **Decision:** Decomposed primitives wrapped in ActionContext
@@ -129,7 +130,8 @@ These conflicts between renee-claude and renee-codex have been decided:
 | CLI simulate command | Stub | Design.md requirement |
 | CLI context command | Missing | Design.md requirement |
 | DrawParticlesCommand | Missing | Design.md requirement |
-| DrawImageCommand (parallax) | Missing | Design.md requirement |
+
+**Note:** DrawImageCommand with parallax is already implemented in renee-merged (`render/commands.py:108-126`).
 
 **Investigation:** `renee-merged/src/renee/cli/main.py`
 
@@ -210,12 +212,14 @@ Phase 9: Complete CLI
 
 | System | Merged | Claude | Codex |
 |--------|--------|--------|-------|
-| Simulation | `simulation/` (38 LOC) | `simulation/` (1,900 LOC) | `simulation/` (38 LOC) |
-| Spatial | `spatial/` (~200 LOC) | `spatial/` (~670 LOC) | `spatial/` (~200 LOC) |
-| Turns | `turns/` (~120 LOC) | `turns/` (~520 LOC) | `turns/` (~120 LOC) |
-| Assets | `assets/` (~130 LOC) | `assets/` (~550 LOC) | `assets/` (~130 LOC) |
-| Input | `input/` (~100 LOC) | `input/` (~250 LOC) | `input/` (~100 LOC) |
-| Multiplayer | `multiplayer/` (~400 LOC) | `multiplayer/` (~600 LOC) | `multiplayer/` (~400 LOC) |
-| Tests | `tests/` (~830 LOC) | `tests/` (~3,000 LOC) | — |
+| Simulation | `simulation/` (47 LOC) | `simulation/` (1,897 LOC) | `simulation/` (38 LOC) |
+| Spatial | `spatial/` (176 LOC) | `spatial/` (1,232 LOC) | `spatial/` (~200 LOC) |
+| Turns | `turns/` (128 LOC) | `turns/` (891 LOC) | `turns/` (~120 LOC) |
+| Assets | `assets/` (131 LOC) | `assets/` (560 LOC) | `assets/` (~130 LOC) |
+| Input | `input/` (105 LOC) | `input/` (499 LOC) | `input/` (~100 LOC) |
+| Multiplayer | `multiplayer/` (465 LOC) | `multiplayer/` (2,286 LOC) | `multiplayer/` (~400 LOC) |
+| Tests | `tests/` (829 LOC) | `tests/` (3,009 LOC) | — |
 
-**Total gap: ~4,800 lines of production code + ~2,200 lines of tests**
+**Total gap: ~6,300 lines of production code + ~2,180 lines of tests**
+
+*LOC counts verified December 2024.*

@@ -32,7 +32,7 @@ Renee is a framework for building turn-based games designed from the ground up f
 
 Renee provides primitives. Games define content.
 
-Works for: Chess, card games, tactics RPGs, board games, dungeon crawlers, puzzle games—any turn-based genre.
+Works for: Chess, card games, tactics RPGs, board games, strategy games, puzzle games—any turn-based genre.
 
 ## Supporting Files
 

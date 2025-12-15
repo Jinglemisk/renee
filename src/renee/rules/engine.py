@@ -83,14 +83,14 @@ def rule(
         actions: Optional list of action types this rule applies to.
 
     Example:
-        @rule(phase="pre", priority=10, intent="Ensure target is in range")
+        @rule(phase="pre", priority=10, intent="Ensure target is within range")
         def check_range(ctx: ActionContext) -> None:
             if distance > max_range:
                 ctx.cancel("Target is out of range")
 
-        @rule(phase="post", actions=("attack",), intent="Apply damage effects")
-        def apply_damage_effects(ctx: ActionContext) -> None:
-            # Only runs after "attack" actions
+        @rule(phase="post", actions=("resolve",), intent="Apply action effects")
+        def apply_effects(ctx: ActionContext) -> None:
+            # Only runs after "resolve" actions
             pass
     """
     action_types = tuple(actions) if actions else ()

@@ -197,9 +197,9 @@ The framework provides semantic types beyond Python primitives. These types carr
 |------|-------------|-------------|
 | `EntityId` | Reference to an entity (int at runtime) | Target of an action |
 | `AssetRef` | Validated reference to an asset | Sprite name, sound effect |
-| `Probability` | Float constrained to 0.0-1.0 | Critical hit chance |
+| `Probability` | Float constrained to 0.0-1.0 | Success chance, trigger probability |
 | `Position` | Grid coordinate (x, y) | Entity location |
-| `DiceRoll` | Parsed dice notation (e.g., "2d6+3") | Damage calculation |
+| `DiceRoll` | Parsed dice notation (e.g., "2d6+3") | Randomized value ranges |
 | `Duration` | Time measurement in game units | Effect duration |
 | `Formula` | Runtime-evaluated expression | Scaling calculations |
 
@@ -215,7 +215,7 @@ These types:
 
 ## Why Intent Fields Matter
 
-LLMs struggle with "grounding" — connecting high-level concepts ("make it hard") to low-level integers (`hp: 500`).
+LLMs struggle with "grounding" — connecting high-level concepts ("make it hard") to low-level integers (`value: 500`).
 
 The `intent` field treats design goals as testable contracts.
 
