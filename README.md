@@ -1,6 +1,6 @@
 <div align="center">
 
-![Renee](renee.jpeg)
+<img src="renee.jpeg" alt="Renee" width="35%" />
 
 # Renee
 
