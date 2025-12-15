@@ -11,3 +11,6 @@ ruff>=0.1
 
 [graphics]
 pygame>=2.5.0
+
+[pygame]
+pygame>=2.5.0

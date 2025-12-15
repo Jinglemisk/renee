@@ -16,6 +16,7 @@ dependencies = [
 renee = "renee.cli.main:app"
 
 [project.optional-dependencies]
+pygame = ["pygame>=2.5.0"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
