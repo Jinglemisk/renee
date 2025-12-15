@@ -4,7 +4,9 @@ An AI-native turn-based game framework.
 
 ## What is Renee?
 
-Renee is a framework for building turn-based games designed from the ground up for AI-assisted development. Traditional game engines assume human developers with GUIs and documentation. Renee assumes your co-developer is an AI coding agent.
+Renee is a genre-agnostic framework for turn-based games designed specifically for AI-assisted development, prioritizing machine-parseable architecture and standard Python logic over traditional human-centric GUIs. It facilitates autonomous code generation and testing through self-describing schemas, intent-based validation, and deterministic simulation tools like snapshotting and rollbacks. 
+
+Traditional game engines assume human developers with GUIs and documentation. Renee assumes your co-developer (or even the only developer) is an AI coding agent.
 
 ## Documentation
 
@@ -34,19 +36,8 @@ Renee provides primitives. Games define content.
 
 Works for: Chess, card games, tactics RPGs, board games, dungeon crawlers, puzzle games—any turn-based genre.
 
-## Supporting Files
-
-| File | Purpose |
-|------|---------|
-| [ROADMAP.md](ROADMAP.md) | Development roadmap for building the framework |
-| [sysprompt.md](sysprompt.md) | System prompt for AI development partner |
-
-## Archived
-
-Historical design iterations preserved for reference:
-- `ai-engine-ORIGINAL.md` — Original exhaustive design
-- `renee-engine-DRAFT.md` — Intermediate draft
-
----
-
-*This is a design-stage project. No implementation exists yet.*
+# Current Status 15.12.2025
+- I took the liberty of having both GPT-5.2-xhigh and Opus-4.5-Ultrathink in parallel and autonomously.
+-- Claude: Wrote 2x more code than Codex, but it heavily diverged from the design document.
+-- GPT: Implemented a much narrower scope but the framework was largely aligned with the design document.
+- Now I am in the process of merging these. 
