@@ -1,8 +1,10 @@
+<div align="center">
+
+![Renee](renee.jpeg)
+
 # Renee
 
-An AI-native turn-based game framework.
-
-## What is Renee?
+</div>
 
 Renee is a genre-agnostic framework for turn-based games designed specifically for AI-assisted development, prioritizing machine-parseable architecture and standard Python logic over traditional human-centric GUIs. It facilitates autonomous code generation and testing through self-describing schemas, intent-based validation, and deterministic simulation tools like snapshotting and rollbacks. 
 
