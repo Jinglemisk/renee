@@ -33,8 +33,8 @@ Renee is a **framework/engine** for turn-based games. This roadmap covers buildi
 │  ┌───────────────────────────────────────────────────────────┐ │
 │  │              Games Built WITH Renee                        │ │
 │  │                                                           │ │
-│  │  • Dungeon crawler (tutorial example)                     │ │
-│  │  • Card game                                              │ │
+│  │  • Strategy game (territory control)                      │ │
+│  │  • Card game (deck builder)                               │ │
 │  │  • Tactics RPG                                            │ │
 │  │  • Board game (Catan-style)                               │ │
 │  │  • etc.                                                   │ │
@@ -84,7 +84,7 @@ renee/
 ├── tests/
 │   └── ...                  # Mirror of src/ structure
 ├── examples/
-│   └── dungeon_crawl/       # Example game for testing
+│   └── example_game/        # Example game for testing
 ├── docs/
 │   └── ...                  # Generated API docs
 ├── pyproject.toml
@@ -366,13 +366,13 @@ class AssetRegistry:
 ```python
 # Generated: renee/assets.py
 class Sprites:
-    GOBLIN_IDLE = "goblin_idle"
-    GOBLIN_WALK = "goblin_walk"
-    KNIGHT_IDLE = "knight_idle"
+    UNIT_INFANTRY = "unit_infantry"
+    UNIT_CAVALRY = "unit_cavalry"
+    CARD_CREATURE = "card_creature"
 
 class Sounds:
-    SWORD_HIT = "sword_hit"
-    COIN_PICKUP = "coin_pickup"
+    ACTION_CONFIRM = "action_confirm"
+    TURN_START = "turn_start"
 
 class Assets:
     Sprites = Sprites
@@ -422,7 +422,7 @@ path = grid.get_path((0, 0), (10, 10))
 in_range = grid.get_tiles_in_range((5, 5), distance=3)
 
 # Assets (type-safe, no magic strings)
-sprite = Assets.Sprites.GOBLIN_IDLE
+sprite = Assets.Sprites.UNIT_INFANTRY
 ```
 
 ---
@@ -600,15 +600,15 @@ turns.define_structure(TimeStructure([
 
 # Define rules
 @rule(phase="pre")
-def armor_reduces_damage(ctx):
-    if ctx.action_name == "attack":
+def modifier_reduces_effect(ctx):
+    if ctx.action_name == "engage":
         target = ctx.params["target"]
-        if ctx.world.has_component(target, Armor):
-            armor = ctx.world.get_component(target, Armor)
-            ctx.modify(damage=max(0, ctx.params["damage"] - armor.value))
+        if ctx.world.has_component(target, Protection):
+            protection = ctx.world.get_component(target, Protection)
+            ctx.modify(effect=max(0, ctx.params["effect"] - protection.value))
 
 # Execute action (goes through pipeline + rules)
-pipeline.execute("attack", source=player, target=goblin, damage=10)
+pipeline.execute("engage", source=unit_a, target=unit_b, effect=10)
 ```
 
 ---
@@ -970,7 +970,7 @@ class SimulationEngine:
 Starter kits for common tasks.
 
 **Tasks:**
-- [ ] `renee context add-enemy`
+- [ ] `renee context add-entity`
 - [ ] `renee context add-system`
 - [ ] `renee context add-rule`
 - [ ] `renee context add-scene`
@@ -978,26 +978,26 @@ Starter kits for common tasks.
 ### Phase 5 Deliverable
 
 ```bash
-$ renee impact "goblin.Combat.attack=15" --json
+$ renee impact "infantry.UnitStats.strength=15" --json
 {
-  "change": "goblin.Combat.attack=15",
-  "affected_files": ["entities/goblin.yaml", "tests/test_combat.py"],
-  "affected_rules": ["armor_reduces_damage"],
+  "change": "infantry.UnitStats.strength=15",
+  "affected_files": ["entities/infantry.yaml", "tests/test_engagement.py"],
+  "affected_rules": ["modifier_reduces_effect"],
   "intent_violations": [{
-    "entity": "Goblin",
-    "intent": "defeated in 2-3 hits",
-    "violation": "now requires 4 hits"
+    "entity": "Infantry",
+    "intent": "eliminated in 2-3 engagements",
+    "violation": "now requires 4 engagements"
   }],
   "simulation_delta": {
-    "player_win_rate": "92% → 78%"
+    "attacker_win_rate": "92% → 78%"
   }
 }
 
-$ renee simulate combat --attacker Player --defender Goblin --iterations 1000 --json
+$ renee simulate scenario --entity-a Commander --entity-b Infantry --iterations 1000 --json
 {
   "win_rate": 0.87,
   "avg_turns": 2.3,
-  "avg_health_remaining": 65
+  "avg_resource_remaining": 65
 }
 ```
 
@@ -1007,15 +1007,15 @@ $ renee simulate combat --attacker Player --defender Goblin --iterations 1000 --
 
 **Goal**: Prove it works with a real game.
 
-### 6.1 Example Game: Dungeon Crawl
+### 6.1 Example Game: Territory Control
 
-Build the tutorial game using the framework.
+Build the tutorial game using the framework. A strategy game demonstrating core systems.
 
 **Tasks:**
-- [ ] Define components (Health, Combat, Position, AI, Inventory)
-- [ ] Define entities (Player, Goblin, Skeleton, HealthPotion)
-- [ ] Define rules (combat, item pickup, win/lose)
-- [ ] Define scenes (tutorial level, combat arena)
+- [ ] Define components (UnitStats, Position, Control, Resources)
+- [ ] Define entities (Commander, Infantry, Territory, Outpost)
+- [ ] Define rules (engagement, capture, resource production)
+- [ ] Define scenes (tutorial map, skirmish arena)
 - [ ] Define turn structure
 - [ ] Write tests
 - [ ] Make it playable
@@ -1049,7 +1049,7 @@ Comprehensive framework tests.
 ### Phase 6 Deliverable
 
 ```bash
-$ cd examples/dungeon_crawl
+$ cd examples/example_game
 $ renee validate
 All files valid.
 
@@ -1100,11 +1100,11 @@ These must be written during their respective phases:
 
 ### Framework is Complete When:
 
-- [ ] Example game (dungeon crawl) is fully playable
+- [ ] Example game (territory control) is fully playable
 - [ ] All documentation gaps are filled
 - [ ] All CLI commands work with `--json`
 - [ ] Test coverage > 80%
-- [ ] A developer can build a different game type (card game, tactics) using only docs
+- [ ] A developer can build a different game type (card game, RPG) using only docs
 - [ ] An AI agent can modify the example game, validate, simulate, and verify
 
 ---

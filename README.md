@@ -36,7 +36,7 @@ Traditional game engines assume human developers with GUIs and documentation. Re
 
 Renee provides primitives. Games define content.
 
-Works for: Chess, card games, tactics RPGs, board games, dungeon crawlers, puzzle games—any turn-based genre.
+Works for: Chess, card games, tactics RPGs, board games, strategy games, puzzle games—any turn-based genre.
 
 # Current Status 15.12.2025
 - I took the liberty of having both GPT-5.2-xhigh and Opus-4.5-Ultrathink in parallel and autonomously.
