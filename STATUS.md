@@ -36,6 +36,8 @@ This is the unified implementation of the Renee AI-native turn-based game framew
 | Structured errors | Done | codex |
 | Render commands | Done | merged |
 | Renderers (pygame/terminal/headless) | Done | codex |
+| Simulation Engine (full) | Done | claude |
+| Impact Analyzer | Done | claude |
 
 ## Architecture
 
@@ -205,13 +207,13 @@ The renee-claude worktree has significantly more comprehensive tests (~3,009 lin
 
 **Note**: renee-merged has registry.py. These provide more detailed schema handling.
 
-#### Simulation Module (Balance Testing)
-- `simulation/impact.py` - Impact analysis
-- `simulation/scenario.py` - Scenario definitions
-- `simulation/simulator.py` - Simulation runner
-- `simulation/statistics.py` - Statistical analysis
+#### ~~Simulation Module (Balance Testing)~~ DONE
+- ~~`simulation/impact.py` - Impact analysis~~
+- ~~`simulation/scenario.py` - Scenario definitions~~
+- ~~`simulation/simulator.py` - Simulation runner~~
+- ~~`simulation/statistics.py` - Statistical analysis~~
 
-**Priority**: Medium - useful for balance testing per DESIGN.md
+**Ported December 2024**: Full simulation engine (~1,900 LOC) including ImpactAnalyzer for AI-native change analysis.
 
 #### Spatial Module (Additional Algorithms)
 - `spatial/area.py` - Area calculations

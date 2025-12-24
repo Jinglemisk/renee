@@ -1,6 +1,6 @@
 # SAVE-RENEE: Gap Analysis & Resolution Guide
 
-**Status:** renee-merged implements ~55% of design.md. This document tracks what's missing and how to fix it.
+**Status:** renee-merged implements ~65% of design.md. This document tracks what's missing and how to fix it.
 
 ---
 
@@ -83,11 +83,11 @@ These conflicts between renee-claude and renee-codex have been decided:
 
 | Feature | Status | Source | Lines |
 |---------|--------|--------|-------|
-| Simulation Engine | Stub only | `renee-claude/src/renee/simulation/` | ~1,900 |
+| ~~Simulation Engine~~ | ✅ Done | Ported from renee-claude | ~1,900 |
 | Intent Validation | Missing | Design.md requirement | — |
-| Impact Analysis | Stub only | `renee-claude/src/renee/simulation/impact.py` | ~530 |
+| ~~Impact Analysis~~ | ✅ Done | Ported from renee-claude | ~530 |
 
-**Investigation:** Compare `renee-merged/src/renee/simulation/` (38 lines) vs `renee-claude/src/renee/simulation/` (1,900 lines)
+**Ported December 2024:** Full simulation engine including Simulator, Scenario, StatisticalSummary, ComparisonResult, ImpactAnalyzer, ImpactReport.
 
 ### HIGH (Game Development Essentials)
 
@@ -172,11 +172,11 @@ Phase 1: Fix Conflicts
 ├── rules/engine.py          # Priority direction
 └── render/renderer.py       # Add is_running()
 
-Phase 2: Port Simulation (AI-Native Core)
-├── simulation/simulator.py
-├── simulation/scenario.py
-├── simulation/statistics.py
-└── simulation/impact.py
+Phase 2: Port Simulation (AI-Native Core) ✅ DONE
+├── simulation/simulator.py     ✅
+├── simulation/scenario.py      ✅
+├── simulation/statistics.py    ✅
+└── simulation/impact.py        ✅ (adapted for merged APIs)
 
 Phase 3: Port Spatial Algorithms
 ├── spatial/area.py
@@ -212,7 +212,7 @@ Phase 9: Complete CLI
 
 | System | Merged | Claude | Codex |
 |--------|--------|--------|-------|
-| Simulation | `simulation/` (47 LOC) | `simulation/` (1,897 LOC) | `simulation/` (38 LOC) |
+| Simulation | `simulation/` (~1,900 LOC) ✅ | `simulation/` (1,897 LOC) | `simulation/` (38 LOC) |
 | Spatial | `spatial/` (176 LOC) | `spatial/` (1,232 LOC) | `spatial/` (~200 LOC) |
 | Turns | `turns/` (128 LOC) | `turns/` (891 LOC) | `turns/` (~120 LOC) |
 | Assets | `assets/` (131 LOC) | `assets/` (560 LOC) | `assets/` (~130 LOC) |
@@ -220,6 +220,6 @@ Phase 9: Complete CLI
 | Multiplayer | `multiplayer/` (465 LOC) | `multiplayer/` (2,286 LOC) | `multiplayer/` (~400 LOC) |
 | Tests | `tests/` (829 LOC) | `tests/` (3,009 LOC) | — |
 
-**Total gap: ~6,300 lines of production code + ~2,180 lines of tests**
+**Total gap: ~4,450 lines of production code + ~2,180 lines of tests**
 
-*LOC counts verified December 2024.*
+*LOC counts updated December 2024. Simulation engine ported (~1,850 LOC added).*
